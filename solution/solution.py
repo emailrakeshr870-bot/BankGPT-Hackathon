@@ -182,8 +182,13 @@ if __name__ == "__main__":
     print(f"webhook: {cfg['url'] or '(not set)'}   key: {'set' if cfg['key'] else 'NOT set'}   mode: {cfg['mode']}")
     if not cfg["url"]:
         sys.exit("Set BANKGPT_WEBHOOK_URL (or webhook_url in solution/bankgpt_config.json) first.")
+    # quotes are optional: every word is part of the question, except a final YYYY-MM-DD date (as_of)
+    words = sys.argv[1:]
+    as_of = words.pop() if len(words) > 1 and re.fullmatch(r"\d{4}-\d{2}-\d{2}", words[-1]) else None
+    question = " ".join(words)
+    print(f"question: {question}" + (f"   as of: {as_of}" if as_of else ""))
     t = time.time()
-    a = ks._ask_n8n(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)
+    a = ks._ask_n8n(question, as_of)
     print(f"{time.time() - t:.1f} s")
     if a is None:
         print("n8n did not return an answer. What n8n sent back:")
