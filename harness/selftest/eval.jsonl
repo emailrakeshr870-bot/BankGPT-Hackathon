@@ -1,0 +1,5 @@
+{"id":"t1","group":"g-6mo","question":"What is the 6-month certificate APY?","expected_answer":"3.50% APY","must_include":["3.50%"],"must_not_include":["2.95%"],"category":"stale_trap","expected_sources":["https://example-cu.test/rates/certificates"]}
+{"id":"t2","question":"What was the 6-month certificate APY in January 2026?","as_of":"2026-01-31","expected_answer":"2.95% APY","must_include":["2.95%"],"must_not_include":["3.50%"],"category":"temporal_as_of"}
+{"id":"t3","question":"How much is a lost debit card replacement?","expected_answer":"$2.50","must_include":["$2.50"],"must_not_include":["$2"],"category":"current_value"}
+{"id":"t4","question":"What is the 60-month jumbo certificate rate?","expected_answer":"Not published; decline.","category":"should_refuse"}
+{"id":"t1b","group":"g-6mo","question":"Current APY on a six month share certificate?","expected_answer":"3.50% APY","must_include":["3.50%"],"must_not_include":["2.95%"],"category":"stale_trap"}

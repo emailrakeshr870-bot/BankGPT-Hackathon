@@ -1,0 +1,20 @@
+{"id": "log-00", "question": "what are branch hours", "as_of": null, "must_include": ["8:30"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-01", "question": "can you tell me the branch hours in IL", "as_of": null, "must_include": ["Galena"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-02", "question": "what is the latest mortgage rate", "as_of": null, "must_include": ["7.13", "7.25"], "must_not_include": ["Home Improvement"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-03", "question": "what was the mortgage rates in June of 2026?", "as_of": null, "must_include": ["6.375"], "must_not_include": ["7.25%", "Relief"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-04", "question": "mortgage rates as of June 2026", "as_of": null, "must_include": ["6.375"], "must_not_include": ["7.25%", "Relief"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-05", "question": "mortgage rates of June 30, 2026", "as_of": null, "must_include": ["6.375"], "must_not_include": ["7.25%"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-06", "question": "what is the latest cd rate", "as_of": null, "must_include": ["4.10%", "3.40%"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-07", "question": "what was the cd rate in august 2026", "as_of": null, "must_include": ["3.40%"], "must_not_include": ["4.10%"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-08", "question": "what is the savings rate", "as_of": null, "must_include": ["0.20%"], "must_not_include": ["Certificates"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-09", "question": "what is the latest promotions", "as_of": null, "must_include": ["switch-and-earn"], "must_not_include": ["promotional-plan"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-10", "question": "what type of business loans do you have?", "as_of": null, "must_include": ["Small Business Loan", "Equipment"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-11", "question": "do you have business checking account?", "as_of": null, "must_include": ["Business Free Checking"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-12", "question": "tell me about cash management accounts", "as_of": null, "must_include": ["Merchant Services"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-13", "question": "how many branches", "as_of": null, "must_include": ["22"], "must_not_include": ["24 branch"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-14", "question": "who is the ceo", "as_of": null, "must_include": ["Joe Hearn"], "must_not_include": ["Robert"], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-15", "question": "who is Joseph Hearn?", "as_of": null, "must_include": ["CEO"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-16", "question": "who is the chief marketing officer", "as_of": null, "must_include": ["Klavitter"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-17", "question": "what are the hours in Wisconsin", "as_of": null, "must_include": ["Platteville"], "must_not_include": [], "category": "user_log", "weight": 1.0, "expected_sources": []}
+{"id": "log-refuse-1", "question": "what's your 7/1 arm rate", "as_of": null, "must_include": [], "must_not_include": [], "category": "should_refuse", "weight": 1.0, "expected_sources": []}
+{"id": "log-refuse-2", "question": "What are the hours for the Waterloo Mullan Avenue branch?", "as_of": null, "must_include": [], "must_not_include": [], "category": "should_refuse", "weight": 1.0, "expected_sources": []}

@@ -1,0 +1,6 @@
+{
+  "webhook_url": "http://localhost:5679/webhook/bankgpt-answer",
+  "webhook_key": "PASTE-YOUR-WEBHOOK-SECRET-HERE",
+  "timeout": 15,
+  "mode": "n8n"
+}

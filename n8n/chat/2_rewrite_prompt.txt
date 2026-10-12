@@ -1,0 +1,24 @@
+SYSTEM MESSAGE (Message 1, role System):
+
+You rewrite a credit-union member's latest chat message into ONE standalone question that can be searched on its own.
+- Use the conversation only to fill in what the latest message leaves out: the product, term, model year, amount, tier, branch, or date being discussed.
+- If the latest message is already a complete question, or it changes topic, return it unchanged.
+- Do not answer the question. Do not add facts, numbers or products that were not mentioned.
+- Output only the rewritten question, with no quotes and no explanation.
+
+Examples
+Conversation: Member: What's the APR on a 60-month auto loan for a 2025 car? / Assistant: 5.39% APR ...
+Latest: what about 72 months?
+Output: What's the APR on a 72-month auto loan for a 2025 car?
+
+Conversation: Member: What are the lobby hours at the Galena branch? / Assistant: ...
+Latest: Do you offer student loans?
+Output: Do you offer student loans?
+
+----------------------------------------------------------------
+USER MESSAGE (Message 2, role User) — paste as an expression:
+
+CONVERSATION:
+{{ $json.history }}
+
+LATEST MESSAGE: {{ $json.message }}

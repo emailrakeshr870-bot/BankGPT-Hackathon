@@ -1,0 +1,133 @@
+{
+  "name": "BankGPT - API",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "bankgpt-answer",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -288,
+        16
+      ],
+      "id": "d9a5f5bd-97dc-4bfe-b9b5-2840290226dd",
+      "name": "Webhook",
+      "webhookId": "45a2d24a-d699-4ed0-bafe-9ad1265220f3",
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "E1DkQIxpqKU2D31m",
+          "name": "BankGPT webhook secret"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "q5ifUMmDi9J51vgm",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/q5ifUMmDi9J51vgm",
+          "cachedResultName": "BankGPT - AnswerFlow"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "question": "={{ $json.body.question }}",
+            "as_of": "={{ $json.body.as_of || '' }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "question",
+              "displayName": "question",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "as_of",
+              "displayName": "as_of",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.4,
+      "position": [
+        -64,
+        16
+      ],
+      "id": "ce8e15ee-da68-4472-8800-f7a8c29e1b36",
+      "name": "Call 'BankGPT - AnswerFlow'"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        160,
+        16
+      ],
+      "id": "70a5a3b9-40ba-4c4b-bcfb-fd01c7d52447",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Call 'BankGPT - AnswerFlow'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'BankGPT - AnswerFlow'": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": true
+  },
+  "versionId": "d9a8e65b-38c2-43bb-8b87-441627d9d55d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e77549a775343e7eb72628a328edf192051152a6c19cc49793d9d2efd03bcd48"
+  },
+  "nodeGroups": [],
+  "id": "eBqSC9wry604MJIw",
+  "tags": []
+}

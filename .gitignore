@@ -1,0 +1,17 @@
+# kit defaults
+results/
+__pycache__/
+*.pyc
+.DS_Store
+.env
+snapshots/0*/
+
+# secrets: never commit (bankgpt_config.json is included on purpose: private repository)
+*.key
+
+# local test runs and large regenerable data
+res_*/
+rag/chunks.jsonl
+
+# unzipped copy of a snapshot inside snapshots_zip (the .zip files are kept)
+snapshots_zip/*/
