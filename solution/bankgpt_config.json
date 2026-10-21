@@ -1,6 +1,6 @@
 {
   "webhook_url": "https://tejentic.app.n8n.cloud/webhook/bankgpt-answer",
-  "webhook_key": "",
+  "webhook_key": "PASTE-YOUR-WEBHOOK-SECRET-HERE",
   "timeout": 15,
   "mode": "n8n"
 }
