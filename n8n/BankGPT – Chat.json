@@ -1,0 +1,289 @@
+{
+  "name": "BankGPT – Chat",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "Welcome to Dupaco-Bot!\nHow can I help you?",
+        "options": {
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -576,
+        32
+      ],
+      "id": "4f6cb214-5e8d-4a6b-9845-0a6ae57ef49b",
+      "name": "When chat message received",
+      "webhookId": "3ecc7c93-d958-4ff7-93b2-7523b35899d4"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5a313af2-7e8b-4ead-8894-905240597fdb",
+              "leftValue": "={{ $json.hasHistory }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        -128,
+        32
+      ],
+      "id": "0ffc9080-92f9-49e6-9239-7aa10334672f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "nCVlfJ2gCTUU80o1",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/nCVlfJ2gCTUU80o1",
+          "cachedResultName": "BankGPT - AnswerFlow"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "question": "={{ $json.question }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "question",
+              "displayName": "question",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "as_of",
+              "displayName": "as_of",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.4,
+      "position": [
+        640,
+        192
+      ],
+      "id": "81c16553-63c4-4232-874f-bc413e4250aa",
+      "name": "Call AnswerFlow"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== BankGPT Chat – Code node \"Reply\" (Run Once for All Items) =====\n// Formats AnswerFlow's result for the chat window and remembers this turn for follow-ups.\nconst C = $('Context').first().json;\nlet question = C.question;\ntry { question = $('Rewrite').first().json.question || question; } catch (e) { /* no rewrite this turn */ }\nconst r = $input.first().json;\nconst answer = String(r.answer || \"I don't know. Please call one of our branches.\").trim();\nlet text = answer;\nconst src = (r.sources || []).slice(0, 3);\nif (src.length) text += '\\n\\nSources:\\n' + src.map(u => '- ' + u).join('\\n');\n\nconst store = $getWorkflowStaticData('global');\nstore.sessions = store.sessions || {};\nconst hist = store.sessions[C.sessionId] || [];\nhist.push({ q: question, a: answer.slice(0, 600) });\nstore.sessions[C.sessionId] = hist.slice(-6);\nconst ids = Object.keys(store.sessions);                 // keep at most 300 conversations\nfor (const id of ids.slice(0, Math.max(0, ids.length - 300))) delete store.sessions[id];\n\nreturn [{ json: { output: text } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        848,
+        192
+      ],
+      "id": "d894bcc1-2fad-46b3-a1f6-6525d083922b",
+      "name": "reply"
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== BankGPT Chat – Code node \"Context\" (Run Once for All Items) =====\n// Reads the chat message and this conversation's last few turns (kept in workflow static data,\n// which n8n saves for runs from the published chat page, not for manual test runs).\nconst t = $input.first().json;\nconst sessionId = String(t.sessionId || 'default');\nconst message = String(t.chatInput || '').trim();\nconst store = $getWorkflowStaticData('global');\nstore.sessions = store.sessions || {};\nconst hist = (store.sessions[sessionId] || []).slice(-3);\nconst history = hist.map(h => `Member: ${h.q}\\nAssistant: ${h.a}`).join('\\n\\n');\nreturn [{ json: { sessionId, message, question: message, hasHistory: hist.length > 0, history } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -352,
+        32
+      ],
+      "id": "9e43c6ce-b647-4087-a76b-a7134f081202",
+      "name": "Context"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-6-luna",
+          "mode": "list",
+          "cachedResultName": "GPT-6-LUNA"
+        },
+        "responses": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You rewrite a credit-union member's latest chat message into ONE standalone question that can be searched on its own.\n- Use the conversation only to fill in what the latest message leaves out: the product, term, model year, amount, tier, branch, or date being discussed.\n- If the latest message is already a complete question, or it changes topic, return it unchanged.\n- Do not answer the question. Do not add facts, numbers or products that were not mentioned.\n- Output only the rewritten question, with no quotes and no explanation.\n\nExamples\nConversation: Member: What's the APR on a 60-month auto loan for a 2025 car? / Assistant: 5.39% APR ...\nLatest: what about 72 months?\nOutput: What's the APR on a 72-month auto loan for a 2025 car?\n\nConversation: Member: What are the lobby hours at the Galena branch? / Assistant: ...\nLatest: Do you offer student loans?\nOutput: Do you offer student loans?"
+            },
+            {
+              "content": "=CONVERSATION:\n{{ $json.history }}\n\nLATEST MESSAGE: {{ $json.message }}"
+            }
+          ]
+        },
+        "builtInTools": {},
+        "options": {
+          "maxTokens": 200,
+          "reasoning": {
+            "reasoningOptions": {
+              "effort": "low",
+              "summary": "none"
+            }
+          },
+          "textFormat": {
+            "textOptions": {
+              "type": "text"
+            }
+          },
+          "topP": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 2.3,
+      "position": [
+        96,
+        -64
+      ],
+      "id": "9d764aa1-4afd-4a46-8b77-2d5a4edb813c",
+      "name": "Rewrite",
+      "credentials": {
+        "openAiApi": {
+          "id": "lL5d6Q1aihXrjrFX",
+          "name": "OpenAI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// ===== BankGPT Chat – Code node \"Use rewrite\" (Run Once for All Items) =====\n// Takes the rewritten question from the \"Rewrite\" model node; falls back to the original message.\nconst C = $('Context').first().json;\nconst SKIP = new Set(['type', 'format', 'id', 'model', 'role', 'status', 'object', 'finish_reason', 'refusal']);\nfunction findText(o) {\n  if (typeof o === 'string') return o.includes(' ') ? o : null;\n  if (Array.isArray(o)) { for (const x of o) { const t = findText(x); if (t) return t; } return null; }\n  if (o && typeof o === 'object') {\n    for (const k of ['content', 'text', 'output', 'message', 'response', 'choices']) {\n      if (k in o) { const t = findText(o[k]); if (t) return t; }\n    }\n    for (const [k, v] of Object.entries(o)) { if (SKIP.has(k)) continue; const t = findText(v); if (t) return t; }\n  }\n  return null;\n}\nlet q = (findText($input.first().json) || '').trim().replace(/^[\"'“]|[\"'”]$/g, '').replace(/^Output:\\s*/i, '');\nif (!q || q.length > 400) q = C.message;\nreturn [{ json: { ...C, question: q } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        -64
+      ],
+      "id": "d277d1c0-0389-49b9-9a46-fe21cc6fe721",
+      "name": "Use rewrite"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Context",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call AnswerFlow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call AnswerFlow": {
+      "main": [
+        [
+          {
+            "node": "reply",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Context": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rewrite": {
+      "main": [
+        [
+          {
+            "node": "Use rewrite",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use rewrite": {
+      "main": [
+        [
+          {
+            "node": "Call AnswerFlow",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "2366fa03-942f-4877-a6ba-6b20ce5a624a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a0ea2b2f3f8d50b8dc65fb05e1a5c5461c0c73e123d160b451ed4e6ae078b07b"
+  },
+  "nodeGroups": [],
+  "id": "zqGS4HOnKdObstxR",
+  "tags": []
+}

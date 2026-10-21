@@ -17,10 +17,10 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.2,
       "position": [
-        -1776,
-        -64
+        0,
+        0
       ],
-      "id": "1eb17d21-1080-42dd-ac34-97873c1b2654",
+      "id": "bc50c235-4233-41e4-ad90-43b12f1bea81",
       "name": "When Executed by Another Workflow"
     },
     {
@@ -30,10 +30,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1552,
-        -64
+        224,
+        0
       ],
-      "id": "be45dd59-9b41-4b7b-9708-a0e520bfc18b",
+      "id": "286ba1f9-a268-4488-bd6a-c75d3db0f652",
       "name": "Prepare"
     },
     {
@@ -55,18 +55,18 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        -1328,
-        -64
+        448,
+        0
       ],
-      "id": "fa863da6-066f-45b9-90d2-87d9dc042198",
+      "id": "23ac3dc5-13a8-4e17-b9e3-e479a94bfc42",
       "name": "Embed",
       "retryOnFail": true,
       "maxTries": 2,
       "waitBetweenTries": 500,
       "credentials": {
         "openAiApi": {
-          "id": "DWovlIFf9kxdlbry",
-          "name": "OpenAI account-BeCareful"
+          "id": "lL5d6Q1aihXrjrFX",
+          "name": "OpenAI account"
         }
       }
     },
@@ -90,17 +90,17 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        -1104,
-        -64
+        672,
+        0
       ],
-      "id": "06c6bcaf-4997-47dd-8000-56c15bab647e",
+      "id": "501ce897-a7df-4089-af35-3f11dc572259",
       "name": "Search A",
       "retryOnFail": true,
       "maxTries": 2,
       "waitBetweenTries": 500,
       "credentials": {
         "httpHeaderAuth": {
-          "id": "h7eRpq8E5UoWthJ1",
+          "id": "2XhjbFzjVUdu8Ta1",
           "name": "Pinecone API Key"
         }
       }
@@ -125,17 +125,17 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.5,
       "position": [
-        -896,
-        -64
+        880,
+        0
       ],
-      "id": "3079f9fe-82e2-4509-b102-5d0ba792e3da",
+      "id": "09fccb80-8329-4ae7-9332-1e71cc49904d",
       "name": "Search B",
       "retryOnFail": true,
       "maxTries": 2,
       "waitBetweenTries": 500,
       "credentials": {
         "httpHeaderAuth": {
-          "id": "h7eRpq8E5UoWthJ1",
+          "id": "2XhjbFzjVUdu8Ta1",
           "name": "Pinecone API Key"
         }
       }
@@ -147,10 +147,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -672,
-        -64
+        1104,
+        0
       ],
-      "id": "0897cf79-6ee5-41ff-9787-de23614f0539",
+      "id": "b1bb759d-c976-41e0-bd6d-3f746fe4d943",
       "name": "Re-rank"
     },
     {
@@ -193,18 +193,18 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 2.3,
       "position": [
-        -448,
-        -64
+        1328,
+        0
       ],
-      "id": "dd59f908-f830-418f-bbf6-2ccd3b415399",
+      "id": "46e466cd-4423-4cad-b89a-3ac1f05b1f4c",
       "name": "Answer",
       "retryOnFail": true,
       "maxTries": 2,
       "waitBetweenTries": 500,
       "credentials": {
         "openAiApi": {
-          "id": "DWovlIFf9kxdlbry",
-          "name": "OpenAI account-BeCareful"
+          "id": "lL5d6Q1aihXrjrFX",
+          "name": "OpenAI account"
         }
       }
     },
@@ -215,10 +215,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -80,
-        -64
+        1696,
+        0
       ],
-      "id": "427596ee-40b1-4a9f-80f6-763080fd4e2d",
+      "id": "54f6b712-7f17-4db0-a946-a603b0fe216d",
       "name": "Format"
     }
   ],
@@ -305,15 +305,14 @@
   "active": true,
   "settings": {
     "executionOrder": "v1",
-    "binaryMode": "separate",
-    "availableInMCP": true
+    "binaryMode": "separate"
   },
-  "versionId": "34cf9c00-47cf-462f-b2be-ec4235e6935c",
+  "versionId": "52084b24-3ee2-4b49-8435-aa2d3992116e",
   "meta": {
     "templateCredsSetupCompleted": true,
-    "instanceId": "e77549a775343e7eb72628a328edf192051152a6c19cc49793d9d2efd03bcd48"
+    "instanceId": "a0ea2b2f3f8d50b8dc65fb05e1a5c5461c0c73e123d160b451ed4e6ae078b07b"
   },
   "nodeGroups": [],
-  "id": "q5ifUMmDi9J51vgm",
+  "id": "nCVlfJ2gCTUU80o1",
   "tags": []
 }
